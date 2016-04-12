@@ -1,0 +1,35 @@
+<resources>
+
+    <string name="app_name">模型</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="right_tag">RIGHT</string>
+    <string name="left_tag">LEFT</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+
+    <!-- 左侧侧拉栏，选择功能分类 -->
+    <string-array name="set_function_array">
+        <item>全部课程</item>
+        <item>我的课程</item>
+        <item>我的K歌</item>
+        <item>离线缓存</item>
+        <item>我的消息</item>
+        <item>我的笔记</item>
+    </string-array>
+
+    <!-- 右侧侧拉栏，视频学科分类 -->
+    <string-array name="video_classify_array">
+        <item>全部课程</item>
+        <item>小学一年级</item>
+        <item>小学二年级</item>
+        <item>小学三年级</item>
+        <item>小学四年级</item>
+        <item>小学五年级</item>
+        <item>小学六年级</item>
+        <item>初中一年级</item>
+        <item>初中二年级</item>
+        <item>初中三年级</item>
+    </string-array>
+
+</resources>
