@@ -12,21 +12,10 @@ import java.lang.Thread.UncaughtExceptionHandler;
 
 public class AudioApp extends Application {
     private static AudioApp app;
-    private static Handler sHandler = new Handler();
 
     public static String rootPath = "/Audio/";
     public static String lrcPath = "/Audio/lrc";
-
-    /**
-     * 服务器连接地址
-     */
-    public final static String BASE_URL = "http://192.168.0.158:8080/wansi";
-    /**
-     * 服务器解析根地址
-     */
-    public final static String HOME_CATEGORIES = BASE_URL + "/home.json";
-    // 正式服务，测试服务器
-    public static final String PHOTOS_URL = BASE_URL + "/photos/photos_1.json";
+    public static String errorPath = "/Audio/error.txt";
 
     @Override
     public void onCreate() {
@@ -37,37 +26,25 @@ public class AudioApp extends Application {
         // 初始化 存储路径
         initPath();
         // 设置异常的处理类
-        // Thread.currentThread().setUncaughtExceptionHandler(
-        // new MyUncaughtExceptionHandler());
+        Thread.currentThread().setUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
     }
 
     /**
      * 初始化存储路径
      */
     private void initPath() {
-        String ROOT = "";
-        // Log.e("", "实际SD卡" + rootPath);
-        //
-        // String sdpath = Environment.getExternalStorageDirectory().toString();
-        // Log.e("", "系统方法：" + sdpath);
-        //
-        // String data = Environment.getDataDirectory().toString();
-        // Log.e("", "data:" + data);
-        // String down = Environment.getDownloadCacheDirectory().toString();
-        // Log.e("", "cache:" + down);
-        // String state = Environment.getExternalStorageState();
-        // Log.e("", "state:" + state);
-        // String root = Environment.getRootDirectory().getPath();
-        // Log.e("", "root:" + root);
+        String ROOT = "";// /storage/emulated/0
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             ROOT = Environment.getExternalStorageDirectory().getPath();
-        //  ROOT = StorageUtils.getSdcardPath(this);
+            Log.e("11", "系统方法：" + ROOT);
+            //  ROOT = StorageUtils.getSdcardPath(this);
         }
         rootPath = ROOT + rootPath;
         lrcPath = ROOT + lrcPath;
+        errorPath = ROOT + errorPath;
 
         File lrcFile = new File(lrcPath);
-        if (lrcFile.exists()) {
+        if (!lrcFile.exists()) {
             lrcFile.mkdirs();
         }
     }
@@ -81,7 +58,8 @@ public class AudioApp extends Application {
             System.out.println("发现一个异常，但是被哥捕获了");
             PrintStream err;
             try {
-                err = new PrintStream(new File("/mnt/sdcard/err.txt"));
+                //  err = new PrintStream(new File("/mnt/sdcard/err.txt"));
+                err = new PrintStream(new File(errorPath));
                 ex.printStackTrace(err);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -98,7 +76,4 @@ public class AudioApp extends Application {
         return app;
     }
 
-    public static void postUi(Runnable run) {
-        sHandler.post(run);
-    }
 }
